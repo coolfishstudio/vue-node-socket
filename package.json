@@ -9,6 +9,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3",
     "vue": "^2.2.2",
     "vue-router": "^2.2.0"
   },
