@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "server": "node server/app.js"
   },
   "dependencies": {
     "body-parser": "^1.17.1",

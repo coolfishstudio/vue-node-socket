@@ -1,20 +1,23 @@
 var express = require('express');
-var fs = require('fs');
-var path = require('path');
-var bodyParser = require('body-parser');
+var http = require('http');
+var SocketIo = require('socket.io');
 
 var app = express();
+var server = http.Server(app);
+var io = SocketIo(server);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-// 访问静态资源
-app.use(express.static(path.resolve(__dirname, '../dist')));
-// 访问单页
-app.get('*', function (req, res) {
-    var html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf-8');
-    res.send(html);
+var port = 9080;
+
+app.get('/', function (req, res) {
+    res.send('Welcome to Server');
 });
+
 // 监听
-app.listen(9900, function () {
-    console.log('success listen...9900');
+io.on('connection', function (socket) {
+    console.log('有新链接');
+});
+
+// 启动
+server.listen(port, function () {
+    console.log('listening on ' + port);
 });
