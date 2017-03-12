@@ -37,5 +37,5 @@ http://localhost:9080/
 
 ## 预览
 
-![首页](../doc/1.png)
-![聊天室](../doc/2.png)
+![首页](./doc/1.png)
+![聊天室](./doc/2.png)
