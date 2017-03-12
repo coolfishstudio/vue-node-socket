@@ -1,6 +1,8 @@
 var express = require('express');
 var http = require('http');
 var SocketIo = require('socket.io');
+var path = require('path');
+var fs = require('fs');
 
 var app = express();
 var server = http.Server(app);
@@ -8,10 +10,18 @@ var io = SocketIo(server);
 
 var port = 9080;
 
-app.get('/', function (req, res) {
+// 访问静态资源
+app.use(express.static(path.resolve(__dirname, '../dist')));
+
+app.get('/ping', function (req, res) {
     res.send('Welcome to Server');
 });
-
+// 访问单页
+app.get('*', function (req, res) {
+    // 后期考虑做缓存等性能优化
+    var html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf-8');
+    res.send(html);
+});
 
 // 在线人数
 var onlineUserList = [];

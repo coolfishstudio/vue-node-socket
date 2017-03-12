@@ -2,20 +2,40 @@
 
 > A Vue.js project
 
-## Build Setup
 
-``` bash
-# install dependencies
+## 安装依赖
+```
 npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 启动服务端
+```
+npm run server
+```
+
+## 启动客户端(开发)
+```
+npm run dev
+```
+
+## 打包
+```
+npm run build
+```
+
+## 访问开发版地址
+```
+http://localhost:8080/
+```
+
+## 访问部署版地址
+```
+http://localhost:9080/
+```
+
+注意 调试的时候 请把 `room.vue` 的地址换成本地
+
+## 预览
+
+![首页](../doc/1.png)
+![聊天室](../doc/2.png)

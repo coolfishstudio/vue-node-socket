@@ -94,7 +94,7 @@ export default {
                 userName: this.userNameList[randomNum],
                 userBg: userBg
             };
-            this.httpServer = io.connect('http://192.168.1.106:9080');
+            this.httpServer = io.connect('http://vns.yitianyibu.com');
             this.httpServer.emit('login', this.userInfo);
             this.onlineUserList.push(this.userInfo);
             this.httpServer.on('login', function (obj) {
