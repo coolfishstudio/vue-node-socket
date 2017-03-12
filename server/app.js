@@ -23,7 +23,6 @@ io.on('connection', function (socket) {
     console.log('有新链接');
     // 监听新用户进入
     socket.on('login', function (obj) {
-        console.log('>>>', obj);
         socket.socketId = obj.userId;
         var sign = false;
         for (var i = 0; i < onlineUserList.length; i++) {
@@ -36,7 +35,6 @@ io.on('connection', function (socket) {
         if (!sign) {
             onlineUserList.push(obj);
         }
-        console.log('>>>>>>', sign)
         // 通知其他用户有新用户加入
         this.broadcast.emit('login', {
             onlineUserList: onlineUserList,
@@ -80,7 +78,7 @@ io.on('connection', function (socket) {
     socket.on('message', function (obj) {
         obj.onlineUserList = onlineUserList;
         this.broadcast.emit('message', obj);
-        console.log('[发言]' + obj.user.userName + '说' + obj.msg);
+        console.log('[发言]' + obj.user.userName + '说 ' + obj.msg);
     });
 });
 

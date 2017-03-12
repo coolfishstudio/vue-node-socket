@@ -3,14 +3,17 @@
         <li-header @headerLeftEvent="loginEvent" @headerRightEvent="configEvent" :config="headerConfig">
             <div slot="title">匿名聊天室</div>
         </li-header>
-        <div class="content">
+        <div class="content" ref="scroll">
             <div class="height-hook">
                 <div v-for="item in messageList">
+                    <!-- 系统通知 -->
                     <div class="item-box center-hook" v-if="item.type === 1">
                         <span class="tip">{{ item.msg }}</span>
                     </div>
+                    <!-- 广播的消息 -->
                     <div class="item-box left-hook" v-if="item.type === 2">
                         <div class="left">
+                            <!-- 头像应该是有多少要打包多少 如果是动态的话...此处取巧 利用随机背景颜色设置多种不同头像 -->
                             <img src="../assets/images/avatar.png" :style="'background-color:' + item.msgUser.userBg" />
                         </div>
                         <div class="center">
@@ -22,6 +25,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 我发的消息 -->
                     <div class="item-box right-hook" v-if="item.type === 3">
                         <div class="right">
                             <img src="../assets/images/avatar.png" :style="'background-color:' + item.msgUser.userBg" />
@@ -58,10 +62,10 @@ export default {
     data () {
         return {
             headerConfig: {
-                left: 'conn',
+                left: '#000000',
                 right: '设置'
             },
-            userNameList: ['加菲猫', '流氓兔', '蜡笔小新', '樱木花道', '机器猫'],
+            userNameList: ['钢铁侠', '绿巨人', '黑寡妇', '鹰眼', '蜘蛛侠', '美国队长', '雷神', '暴风女', '毁灭博士', '死侍', '哨兵', '万磁王', '金刚狼', '镭射眼', '红骷髅', '冬日战士', '灭霸', '章鱼博士', '幻视', '霹雳火'],
             connectState: false,
             userInfo: {},
             messageList: [],
@@ -73,6 +77,9 @@ export default {
         this.userInfo = {};
         this.messageList = [];
     },
+    updated () {
+        this.scroll();
+    },
     mounted () {
         this.connectEvent();
     },
@@ -80,7 +87,6 @@ export default {
         connectEvent () {
             var _this = this;
             var randomNum = Math.floor(Math.random() * _this.userNameList.length);
-            console.log(randomNum);
             var userBg = this.randomColor();
             // 用户信息
             this.userInfo = {
@@ -92,7 +98,6 @@ export default {
             this.httpServer.emit('login', this.userInfo);
             this.onlineUserList.push(this.userInfo);
             this.httpServer.on('login', function (obj) {
-                console.log('====>', obj);
                 _this.onlineUserList = obj.onlineUserList;
                 _this.messageList.push({
                     type: 1,
@@ -116,7 +121,6 @@ export default {
                 });
             });
             this.httpServer.on('message', function (obj) {
-                console.log(obj);
                 _this.onlineUserList = obj.onlineUserList;
                 _this.messageList.push({
                     type: 2,
@@ -135,7 +139,6 @@ export default {
             this.inputValue = this.trim(this.inputValue);
             if (this.inputValue.length > 0) {
                 if (this.connectState) {
-                    console.log('>>>user>>>', this.userInfo);
                     this.httpServer.emit('message', {
                         msg: this.inputValue,
                         user: this.userInfo
@@ -157,6 +160,10 @@ export default {
         },
         randomColor () {
             return '#' + Math.floor(Math.random() * 0xffffff).toString(16);
+        },
+        scroll () {
+            // 有新消息 滚动容器
+            this.$refs.scroll.scrollTop = this.$refs.scroll.scrollHeight;
         }
     }
 }
@@ -202,6 +209,16 @@ export default {
                     padding: 8px 10px 5px 10px;
                     border-radius: 3px;
                     line-height: 20px;
+                    word-break:break-all;
+                    &:after {
+                        position: absolute;
+                        display: block;
+                        content: '';
+                        width: 0;
+                        height: 0;
+                        border: 5px solid transparent;
+                        top: 5px;
+                    }
                 }
             }
             .user {
@@ -227,8 +244,13 @@ export default {
                     float: left;
                     margin-left: 10px;
                     .text {
+                        float: left;
                         background-color: #fff;
                         color: #333;
+                        &:after {
+                            border-right-color: #fff;
+                            left: -10px;
+                        }
                     }
                 }
             }
@@ -238,8 +260,13 @@ export default {
                     text-align: left;
                     margin-right: 10px;
                     .text {
-                        background-color: #1aad19;
-                        color: #fff;
+                        float: right;
+                        background-color: #a2e562;
+                        color: #333;
+                        &:after {
+                            border-left-color: #a2e562;
+                            right: -10px;
+                        }
                     }
                     .user {
                         text-align: right;
@@ -280,7 +307,7 @@ export default {
                 width: 22%;
                 height: 33px;
                 outline: none;
-                background-color: #1aad19;
+                background-color: #28282d;
                 border-radius: 0 5px 5px 0;
                 text-align: center;
                 line-height: 33px;

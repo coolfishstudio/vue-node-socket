@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="base load-once" :class="{remove: !loadState}" v-show="isLoadShow">
-            <div class="text">聊天室</div>
+            <div class="text">匿名聊天室</div>
         </div>
     </div>
 </template>
@@ -37,8 +37,8 @@
         display: block;
     }
     .load-once {
-        background-color: #1aad19;
-        background-image: url('../assets/images/logo.png');
+        background-color: #28282d;
+        background-image: url('../assets/images/avatar.png');
         background-position: center 35%;
         background-size: 120px;
         background-repeat: no-repeat;
