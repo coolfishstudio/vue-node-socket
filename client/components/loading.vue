@@ -37,8 +37,8 @@
         display: block;
     }
     .load-once {
-        background-color: #499eff;
-        background-image: url('../assets/logo.png');
+        background-color: #1aad19;
+        background-image: url('../assets/images/logo.png');
         background-position: center 35%;
         background-size: 120px;
         background-repeat: no-repeat;
